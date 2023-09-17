@@ -2,7 +2,7 @@ const express = require("express");
 const catcherror = require("../Middleware/catcherror");
 const Bus = require("../Model/BusModel");
 const ErrorHandler = require("../utils/errorHandler");
-
+const ApiFeature = require("../utils/ApiFeature")
 // Adding Bus API.
 exports.addBus = catcherror(async (req, res, next) => {
   const Res = await Bus.create(req.body);
@@ -27,19 +27,28 @@ exports.getBus = catcherror(async (req, res, next) => {
   });
 });
 
-exports.getallBus = catcherror(async(req,res,next)=>{
-    const bus = await Bus.find();
+exports.getallBus = catcherror(async (req, res, next) => {
+  const resultPerPage = 4
+  const countProducts = await Bus.countDocuments()
+  const apifeature = new ApiFeature(Bus.find(), req.query)
+      .search()
+      .filter()
+      .Pagination(resultPerPage);
+  const bus = await apifeature.query;
+  res.status(201).json({
+      success: true,
+      bus
+  })
+});
 
-    if(!bus){
-    return next(new ErrorHandler("bus are  not found", 404));
-    }
-    console.log("called")
-    res.status(201).json({
-        success: true,
-        bus,
-      });
-})
 
+// exports.search =catcherror((req,res,next)=>{
+//     const query = req.query;
+
+//     let filterBus = 
+
+//     console.log(query)
+// })
 //  For update location coordinates which are fetch from hardware.
 exports.updateLocation = catcherror(async (req, res, next) => {
  

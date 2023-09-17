@@ -26,3 +26,5 @@ app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {
     console.log(`Server is listening on port ${process.env.PORT}`);
 });
+
+// man can do what he will, but cannot will what he will
