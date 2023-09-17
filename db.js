@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-
+const dotenv = require("dotenv");
+dotenv.config({path : "F:/dhruv/webd/practice/SIH/Backend/config/config.env"})
 const mongoconnect = () => {
     mongoose.connect(
-        "mongodb://127.0.0.1:27017/Bustravel", { useNewUrlParser: true, useUnifiedTopology: true }).
+        process.env.DB_URL, { useNewUrlParser: true, useUnifiedTopology: true }).
         then((data) => {
         console.log(`${data.connection.host}`);
         })

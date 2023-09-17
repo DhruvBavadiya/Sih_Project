@@ -33,6 +33,7 @@ exports.getallBus = catcherror(async(req,res,next)=>{
     if(!bus){
     return next(new ErrorHandler("bus are  not found", 404));
     }
+    console.log("called")
     res.status(201).json({
         success: true,
         bus,
