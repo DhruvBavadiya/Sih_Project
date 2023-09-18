@@ -22,9 +22,9 @@ app.use("/app/vr1",bus)
 app.use("/app/vr1",book)
 app.use(errorMiddleware);
 
-
-app.listen(process.env.PORT, () => {
-    console.log(`Server is listening on port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is listening on port ${PORT}`);
 });
 
 // man can do what he will, but cannot will what he will
