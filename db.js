@@ -1,14 +1,17 @@
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config({path : "F:/dhruv/webd/practice/SIH/Backend/config/config.env"})
 
-const mongoURI = process.env.DB_URL
+const mongoURI = "mongodb+srv://bavadiyadhruv:Frj1ogDYcNbnDnUo@cluster0.x7jcce8.mongodb.net/" // Replace with your environment variable name
+
+console.log("MongoDB URI:", mongoURI); // Add this line to check the value
 const mongoconnect = () => {
-    mongoose.connect(
-        mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }).
-        then((data) => {
-        console.log(`${data.connection.host}`);
-        })
-}
+  mongoose
+    .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log("Connected to MongoDB");
+    })
+    .catch((error) => {
+      console.error("Error connecting to MongoDB:", error);
+    });
+};
 
-module.exports = mongoconnect
+module.exports = mongoconnect;
