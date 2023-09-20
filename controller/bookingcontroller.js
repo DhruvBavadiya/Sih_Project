@@ -107,18 +107,35 @@ exports.generatePNR = catcherror(async (req, res, next) => {
 // Find pnrNumber:
 
 exports.findPnr = catcherror(async (req, res, next) => {
-  const apifeature = new ApiFeature(Pnr.find(), req.query)
-  .search()
-  .filter();
+  const apifeature = new ApiFeature(Pnr.find(), req.query).search().filter();
 
   const pnr = await apifeature.query;
   res.status(201).json({
-    success:true,
-    pnr
-  })
+    success: true,
+    pnr,
+  });
 });
 
+exports.sendSMS = catcherror(async (req, res, next) => {
 
-// exports.sendSMS = catcherror(async(req,res,next)=>{
+  const pnr = await Pnr.findById(req.params.Id)
 
-// })
+  const accountSid = "AC34d85a7dde8484535182a0936a8ca5d6";
+  const authToken = "5cfbc021c8b469127f51c9ce03f7d849";
+  const client = require("twilio")(accountSid, authToken);
+  const body = `Hello ${pnr.user.mobileNumber} this is your pnr number:${pnr.pnrNumber} ,your bus is from ${pnr.bus.from} to ${pnr.bus.to} and seatNumber are ${pnr.bus.seatNumber}`
+ const responce = client.messages
+    .create({
+      body: body,
+      from: "+14109275816",
+      to: "+918238912860",
+    })
+    .then((message) => console.log(message.sid))
+    .catch((error) => console.error(`Error sending message: ${error.message}`));
+    
+    if(responce){
+      res.status(201).json({
+        success:true
+      })
+    }
+});
