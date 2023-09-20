@@ -17,17 +17,37 @@ const BusModel = new mongoose.Schema({
     type: String,
     required: true,
   },
-  duration: {
-    type: Date,
+  stops:[{
+    type:String,
+    required:true
+  }],
+  arrivalTime:{
+    type:Number,
     required: true,
-    default: Date.now,
+
+  },
+  departureTime:{
+    type:Number,
+    required: true,
+  },
+  duration: {
+    hours: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    minutes: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   numOfSeat: {
     type: Number,
-    default: 20, // Default number of seats
+    default: 32, // Default number of seats
   },
   AvailableSeat:{
-    default:20,
+    default:32,
     type:Number
   },
   seatNumber: [
